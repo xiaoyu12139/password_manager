@@ -1,0 +1,38 @@
+{
+  "name": "password_manager",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "password",
+    "manager",
+    "security",
+    "electron"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "安全的密码管理工具，带有GUI界面和搜索功能",
+  "devDependencies": {
+    "electron": "28.0.0",
+    "electron-builder": "24.6.4"
+  },
+  "dependencies": {
+    "crypto-js": "4.2.0",
+    "electron-store": "8.1.0"
+  },
+  "build": {
+    "appId": "com.password.manager",
+    "productName": "密码管理器",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.svg"
+    }
+  }
+}

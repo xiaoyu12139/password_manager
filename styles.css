@@ -1,0 +1,502 @@
+/* 全局样式 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* 按钮样式 */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.primary-button {
+  background-color: #4a6cf7;
+  color: white;
+  font-weight: 500;
+}
+
+.primary-button:hover {
+  background-color: #3a5ce5;
+}
+
+.danger-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.danger-button:hover {
+  background-color: #c0392b;
+}
+
+.cancel-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.cancel-button:hover {
+  background-color: #d0d0d0;
+}
+
+/* 表单样式 */
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #555;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* 登录界面 */
+#login-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-container {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+}
+
+.login-container h1 {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.login-container .form-group {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.login-hint {
+  color: #888;
+  font-size: 14px;
+}
+
+/* 主界面 */
+#main-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+.header-left h1 {
+  font-size: 20px;
+  color: #333;
+}
+
+.header-center {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-container input {
+  flex-grow: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.search-container button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #4a6cf7;
+  color: white;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  white-space: nowrap;
+}
+
+.header-right {
+  display: flex;
+  gap: 12px;
+}
+
+/* 网站链接样式 */
+.website-link {
+  color: #4a6cf7;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.website-link:hover {
+  text-decoration: underline;
+  color: #3a5ce5;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .header-center {
+    order: 2;
+    width: 100%;
+  }
+  
+  .search-container {
+    max-width: 100%;
+  }
+  
+  .header-right {
+    order: 1;
+    justify-content: center;
+  }
+  
+  main {
+    padding: 16px;
+  }
+  
+  .modal {
+    width: 95vw;
+    max-width: 95vw;
+  }
+  
+  .passwords-container {
+    overflow-x: auto;
+  }
+  
+  table {
+    min-width: 600px;
+  }
+}
+
+/* 下拉菜单 */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+.dropdown-content a:hover {
+  background-color: #f5f7fa;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* 主内容区域 */
+main {
+  flex-grow: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.passwords-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* 表格样式 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f5f7fa;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  font-weight: 500;
+  color: #555;
+}
+
+tbody tr:hover {
+  background-color: #f9fafc;
+}
+
+.password-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.password-actions button {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+#no-passwords-message {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+}
+
+/* 模态框样式 */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 500px;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 16px 24px;
+  background-color: #f5f7fa;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  color: #333;
+  font-weight: 500;
+}
+
+.close-button {
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.form-actions, .details-actions, .dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* 密码字段特殊样式 */
+.password-input-container {
+  display: flex;
+  gap: 8px;
+}
+
+.password-input-container input {
+  flex-grow: 1;
+}
+
+.toggle-password, .generate-password, .show-button, .copy-button {
+  padding: 0 10px;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+/* 密码详情样式 */
+.details-container {
+  display: grid;
+  gap: 16px;
+}
+
+.detail-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.detail-value {
+  word-break: break-word;
+}
+
+.detail-value.copyable {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-value .value {
+  flex-grow: 1;
+}
+
+.password-dots {
+  letter-spacing: 2px;
+}
+
+.visit-link {
+  color: #4a6cf7;
+  text-decoration: none;
+}
+
+.visit-link:hover {
+  text-decoration: underline;
+}
+
+/* 遮罩层 */
+#modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* 通知提示 */
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #333;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .header-center, .search-container {
+    width: 100%;
+  }
+  
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .detail-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

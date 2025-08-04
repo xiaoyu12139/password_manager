@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- 背景 -->
+  <rect width="512" height="512" rx="64" fill="#4a6fa5" />
+  
+  <!-- 锁形状 -->
+  <rect x="156" y="212" width="200" height="180" rx="16" fill="#ffffff" />
+  
+  <!-- 锁环 -->
+  <path d="M196 212 v-60 a60 60 0 0 1 120 0 v60" stroke="#ffffff" stroke-width="40" fill="none" />
+  
+  <!-- 钥匙孔 -->
+  <circle cx="256" cy="280" r="30" fill="#4a6fa5" />
+  <rect x="246" y="280" width="20" height="60" fill="#4a6fa5" />
+  
+  <!-- 安全标志 -->
+  <circle cx="400" cy="112" r="48" fill="#5fd38d" />
+  <path d="M385 112 l10 10 20 -20" stroke="#ffffff" stroke-width="8" fill="none" />
+</svg>
