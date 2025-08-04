@@ -57,8 +57,16 @@ let confirmCallback = null;
 
 // 初始化应用
 function initApp() {
+  // 自动聚焦到主密码输入框
+  masterPasswordInput.focus();
+  
   // 登录按钮点击事件
   loginButton.addEventListener('click', handleLogin);
+  
+  // 主密码输入框回车键触发登录
+  masterPasswordInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') handleLogin();
+  });
   
   // 搜索功能
   searchButton.addEventListener('click', handleSearch);
@@ -119,6 +127,17 @@ function initApp() {
       () => deletePassword(currentPasswordId)
     );
   });
+  
+  // 访问网站链接
+  if (visitLink) {
+    visitLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = e.target.getAttribute('data-url');
+      if (url) {
+        window.electronAPI.openExternal(url);
+      }
+    });
+  }
   
   // 点击遮罩层关闭模态框
   modalOverlay.addEventListener('click', closeAllModals);
@@ -280,7 +299,7 @@ function showPasswordDetails(password) {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       url = 'https://' + url;
     }
-    visitLink.href = url;
+    visitLink.setAttribute('data-url', url);
     visitLink.classList.remove('hidden');
   } else {
     visitLink.classList.add('hidden');

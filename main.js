@@ -14,6 +14,7 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 700,
+    icon: path.join(__dirname, 'assets/icon.png'), 
     minWidth: 600,
     minHeight: 500,
     autoHideMenuBar: true,
@@ -24,6 +25,11 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   });
+
+  // 设置应用图标（用于任务栏）
+  if (process.platform === 'win32') {
+    mainWindow.setIcon(path.join(__dirname, 'assets/icon.png'));
+  }
 
   // 加载主页面
   mainWindow.loadFile('index.html');
