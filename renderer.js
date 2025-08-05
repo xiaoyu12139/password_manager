@@ -156,16 +156,27 @@ async function handleLogin() {
     const result = await window.passwordManager.verifyMasterPassword(masterPassword);
     
     if (result.success) {
+      // 密码验证成功，加载主界面
       currentPasswords = result.passwords;
       showMainScreen();
       renderPasswordsList();
       masterPasswordInput.value = '';
+      console.log('登录成功，已加载主界面');
     } else {
-      showNotification('主密码不正确');
+      // 密码验证失败，显示错误信息但不加载主界面
+      const errorMessage = result.error || '主密码不正确';
+      showNotification(errorMessage);
+      console.log('登录失败:', errorMessage);
+      // 清空输入框，让用户重新输入
+      masterPasswordInput.value = '';
+      masterPasswordInput.focus();
     }
   } catch (error) {
-    console.error('登录失败:', error);
+    console.error('登录过程中发生异常:', error);
     showNotification('登录失败，请重试');
+    // 清空输入框，让用户重新输入
+    masterPasswordInput.value = '';
+    masterPasswordInput.focus();
   }
 }
 

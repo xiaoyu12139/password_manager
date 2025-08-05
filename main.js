@@ -3,6 +3,21 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 
+// 设置控制台编码为UTF-8，解决中文乱码问题
+if (process.platform === 'win32') {
+  // 在Electron中，编码问题主要通过chcp命令在启动脚本中解决
+  console.log('Windows平台已设置UTF-8编码');
+}
+
+// 全局错误处理
+process.on('uncaughtException', (error) => {
+  console.error('未捕获的异常:', error);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('未处理的 Promise 拒绝:', reason);
+});
+
 // 存储密码数据的文件路径
 const DATA_FILE = path.join(app.getPath('userData'), 'passwords.enc');
 
@@ -35,7 +50,9 @@ function createWindow() {
   mainWindow.loadFile('index.html');
 
   // 开发环境打开开发者工具
-  // mainWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV === 'development' || process.argv.includes('--debug')) {
+    mainWindow.webContents.openDevTools();
+  }
 
   return mainWindow;
 }
@@ -81,15 +98,26 @@ function savePasswords(passwords) {
 
 // 加载密码数据
 function loadPasswords() {
-  if (!MASTER_KEY) return [];
+  console.log('开始加载密码数据...');
+  
+  if (!MASTER_KEY) {
+    console.log('主密钥未设置，返回空数组');
+    return [];
+  }
   
   try {
+    console.log('检查数据文件:', DATA_FILE);
     if (!fs.existsSync(DATA_FILE)) {
+      console.log('数据文件不存在，返回空数组');
       return [];
     }
     
+    console.log('读取加密数据文件...');
     const encryptedData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-    return decryptData(encryptedData, MASTER_KEY) || [];
+    console.log('解密数据...');
+    const decryptedData = decryptData(encryptedData, MASTER_KEY) || [];
+    console.log(`成功加载 ${decryptedData.length} 条密码记录`);
+    return decryptedData;
   } catch (error) {
     console.error('加载密码失败:', error);
     return [];
@@ -102,13 +130,39 @@ app.whenReady().then(() => {
   
   // 处理主密码验证
   ipcMain.handle('verify-master-password', (event, password) => {
-    // 在实际应用中，应该使用更安全的方式验证主密码
-    // 这里简单地使用密码生成密钥
-    MASTER_KEY = crypto.scryptSync(password, 'salt', 32);
-    const passwords = loadPasswords();
-    
-    // 如果能成功加载密码，说明主密码正确
-    return { success: true, passwords };
+    try {
+      // 在实际应用中，应该使用更安全的方式验证主密码
+      // 这里简单地使用密码生成密钥
+      MASTER_KEY = crypto.scryptSync(password, 'salt', 32);
+      
+      // 检查数据文件是否存在
+      if (!fs.existsSync(DATA_FILE)) {
+        // 首次使用，密码正确
+        console.log('首次使用，创建新的密码数据库');
+        return { success: true, passwords: [] };
+      }
+      
+      // 尝试加载和解密密码数据
+      console.log('验证主密码...');
+      const encryptedData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      const decryptedData = decryptData(encryptedData, MASTER_KEY);
+      
+      if (decryptedData === null) {
+        // 解密失败，密码错误
+        console.log('主密码验证失败');
+        MASTER_KEY = null; // 清除错误的密钥
+        return { success: false, error: '主密码不正确，请重新输入' };
+      }
+      
+      // 解密成功，密码正确
+      console.log('主密码验证成功');
+      return { success: true, passwords: decryptedData };
+      
+    } catch (error) {
+      console.error('密码验证过程中发生错误:', error);
+      MASTER_KEY = null; // 清除可能的错误密钥
+      return { success: false, error: '验证过程中发生错误，请重试' };
+    }
   });
   
   // 获取所有密码
