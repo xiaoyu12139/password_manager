@@ -184,6 +184,10 @@ async function handleLogin() {
 function showMainScreen() {
   loginScreen.classList.add('hidden');
   mainScreen.classList.remove('hidden');
+  // 登录成功后，搜索框自动获取焦点
+  setTimeout(() => {
+    searchInput.focus();
+  }, 100);
 }
 
 // 显示登录界面
